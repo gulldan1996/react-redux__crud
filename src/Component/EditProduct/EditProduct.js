@@ -5,45 +5,53 @@ import { Redirect, Link } from 'react-router-dom';
 export default class EditProduct extends Component {
    state = {
     redirect: false,
+    inputName: '',
+    inputPrice: '',
+    inputCreate: '',
+    inputText: '',
+    inputSize: '',
   }
 
-   static getDerivedStateFromProps({ editProduct }, state) {
-     return {
-      upProdData: editProduct,
-     }
+  componentDidMount() {
+    if (this.props.editProduct) {
+      const { name, price, createData, description, id } = this.props.editProduct;
+      return this.setState({
+      inputName: name,
+      inputPrice: price,
+      inputCreate: createData,
+      inputText: description.text,
+      inputSize: description.size,
+      id: id,
+      })
+    }
   }
 
 
   handleInputChange = event => {
     const { name, value } = event.target;
 
-    this.setState(prevState => ({
-      upProdData: {
-        ...prevState.upProdData,
-        [name]: value
-      }
-    }));
-    // this.setState({ [name]: value });
-  }
+    this.setState({
+      [name]: value,
+    });
+  };
 
   handleUpdateProduct = (e) => {
     e.preventDefault();
-    const { inputName, inputPrice, createData } = this.state.upProdData;
-    const { updateProduct, editProduct} = this.props;
-
+    const { inputName, inputPrice, inputCreate, id, inputText, inputSize } = this.state;
+    const { updateProduct } = this.props;
 
     updateProduct({
-        id: editProduct.id,
+        id: id,
         name: inputName,
         price: inputPrice,
-        createData: createData,
-        description: { text: 'asd', size: '44'},
+        createData: inputCreate,
+        description: { text: inputText, size: inputSize},
     });
 
      this.setState({
       redirect: true,
     })
-  }
+  };
 
   render() {
     if(this.state.redirect) {
@@ -54,7 +62,7 @@ export default class EditProduct extends Component {
       return <Link to="/">List of Product</Link>;
     }
 
-    const { name, price, createData } = this.state.upProdData;
+    const { inputName, inputPrice, inputCreate, inputText, inputSize } = this.state;
 
     return (
       <div>
@@ -65,7 +73,7 @@ export default class EditProduct extends Component {
           <input
             type="text"
             name="inputName"
-            value={name}
+            value={inputName}
             onChange={this.handleInputChange}
           />
         </label>
@@ -74,9 +82,9 @@ export default class EditProduct extends Component {
           Price:
           <br/>
           <input
-            type="text"
-            name="price"
-            value={price}
+            type="number"
+            name="inputPrice"
+            value={inputPrice}
             onChange={this.handleInputChange}
           />
         </label>
@@ -86,8 +94,30 @@ export default class EditProduct extends Component {
             <br/>
             <input
               type="text"
-              name="createData"
-              value={createData}
+              name="inputCreate"
+              value={inputCreate}
+              onChange={this.handleInputChange}
+            />
+          </label>
+          <br/>
+          <label>
+            About Display:
+            <br/>
+            <input
+              type="text"
+              name="inputText"
+              value={inputText}
+              onChange={this.handleInputChange}
+            />
+          </label>
+          <br/>
+          <label>
+            Size Display:
+            <br/>
+            <input
+              type="number"
+              name="inputSize"
+              value={inputSize}
               onChange={this.handleInputChange}
             />
           </label>
@@ -108,7 +138,6 @@ EditProduct.propTypes = {
 };
 
 EditProduct.defaultProps = {
-
   createData: '',
   text: '',
   size: '',

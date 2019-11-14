@@ -29,15 +29,16 @@ export function getNextState(state = initialState, action) {
         product: [...state.product, action.addNewProduct]
       }
     case ACTION_TYPE.UPDATE_PRODUCT:
+    const upProd = action.upProd;
       return {
         ...state,
-        product: state.product.map((product) => {
-          if (product.id !== state.product.id) {
-            return product;
+        product: [...state.product.map(prod => {
+          if(prod.id !== upProd.id) {
+            return prod;
           } else {
-            return action.upProd;
+            return upProd;
           }
-        }),
+        })],
       }
     default:
       return state;
