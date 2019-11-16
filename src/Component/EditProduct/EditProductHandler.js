@@ -1,17 +1,17 @@
-import EditProduct from './EditProduct';
 import { connect } from 'react-redux';
+import EditProduct from './EditProduct';
 import { updateProduct } from '../../store/actions';
 
 function mapStateToProps(state) {
   return {
-    editProduct: state.aboutProduct,
+    aboutProduct: state.aboutProduct,
     lengthProduct: state.product,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    updateProduct: (upProd) => dispatch(updateProduct(upProd))
+    updateProduct: upProd => dispatch(updateProduct(upProd)),
   };
 }
 

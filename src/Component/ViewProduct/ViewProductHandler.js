@@ -1,5 +1,5 @@
-import {ViewProduct} from './ViewProduct';
 import { connect } from 'react-redux';
+import { ViewProduct } from './ViewProduct';
 
 function mapStateToProps(state) {
   return {

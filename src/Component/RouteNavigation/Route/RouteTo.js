@@ -1,9 +1,9 @@
 import React from 'react';
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route } from 'react-router-dom';
 import ListOfProductsHandler from '../../ListOfProducts/ListOfProductsHandler';
 import ViewProductHandler from '../../ViewProduct/ViewProductHandler';
 import EditProductHandler from '../../EditProduct/EditProductHandler';
-import AddNewProduct from './../../AddNewProduct/AddNewProductHandler';
+import AddNewProduct from '../../AddNewProduct/AddNewProductHandler';
 
 export default function RouteTo() {
   return (
@@ -15,5 +15,5 @@ export default function RouteTo() {
         <Route path="/AddNewProduct" component={AddNewProduct} />
       </Switch>
     </div>
-  )
+  );
 }

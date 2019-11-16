@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-indent */
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { useTheme } from '@material-ui/core/styles';
 import {
@@ -15,7 +16,7 @@ import {
   ListItemIcon,
   ListItemText,
   Fab,
-  Tooltip
+  Tooltip,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -25,7 +26,6 @@ import MailIcon from '@material-ui/icons/Mail';
 import AddIcon from '@material-ui/icons/Add';
 import { useStyles } from './RouteNavigationUi';
 import RouteTo from './Route/RouteTo';
-
 
 export default function RouteNavigation() {
   const classes = useStyles();
@@ -43,7 +43,7 @@ export default function RouteNavigation() {
 
   const handlerNamePages = (e) => {
     setName(e.name);
-  }
+  };
 
   return (
     <div className={classes.root}>
@@ -91,14 +91,12 @@ export default function RouteNavigation() {
         <Divider />
         <List>
           {[
-            { name: 'List of Products', to: '/'},
-            { name: 'Edit Product', to: '/EditProduct'},
-            { name: 'View Product', to: '/ViewProduct'}].map((item, index) => (
+            { name: 'List of Products', to: '/' }].map((item, index) => (
             <ListItem
               button
               component={Link}
               to={item.to}
-              key={index}
+              key={item.to}
               onClick={() => handlerNamePages(item, index)}
             >
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
@@ -113,7 +111,7 @@ export default function RouteNavigation() {
         })}
       >
         <div className={classes.drawerHeader} />
-          <RouteTo />
+        <RouteTo />
       </main>
     </div>
   );

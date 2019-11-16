@@ -1,17 +1,17 @@
-import AddNewProduct from './AddNewProduct';
 import { connect } from 'react-redux';
+import AddNewProduct from './AddNewProduct';
 import { addNewProduct } from '../../store/actions';
 
 function mapStateToProps(state) {
   return {
     aboutProduct: state.aboutProduct,
-    lengthProduct: state.product
+    lengthProduct: state.product,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    addNewProduct: (item) => dispatch(addNewProduct(item))
+    addNewProduct: item => dispatch(addNewProduct(item)),
   };
 }
 

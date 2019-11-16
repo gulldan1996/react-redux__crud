@@ -1,5 +1,5 @@
-import ListOfProducts from './ListOfProducts';
 import { connect } from 'react-redux';
+import ListOfProducts from './ListOfProducts';
 import { deleteProduct, selectLink } from '../../store/actions';
 
 function mapStateToProps(state) {
