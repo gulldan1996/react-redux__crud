@@ -1,9 +1,14 @@
+/* eslint-disable no-shadow */
+/* eslint-disable prefer-const */
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { EditForm } from './EditForm/EditForm';
+import { updateProduct } from '../../redux/actions';
+import { EditForm } from '../../View/EditForm';
+import { getAboutProduct } from '../../redux/selectors';
 
-export default class EditProduct extends Component {
+class EditProduct extends Component {
   state = {
     redirect: false,
     inputName: '',
@@ -52,6 +57,7 @@ export default class EditProduct extends Component {
       inputText,
       inputSize,
     } = this.state;
+
     const {
       updateProduct,
     } = this.props;
@@ -106,11 +112,12 @@ export default class EditProduct extends Component {
   }
 }
 
-EditProduct.propTypes = {
-  aboutProduct: PropTypes.string,
-  updateProduct: PropTypes.func.isRequired,
-};
+let mapStateToProps = state => ({
+  aboutProduct: getAboutProduct(state),
+});
 
-EditProduct.defaultProps = {
-  aboutProduct: {},
-};
+let mapDispatchToProps = dispatch => ({
+  updateProduct: upProd => dispatch(updateProduct(upProd)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProduct);

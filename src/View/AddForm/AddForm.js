@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import {
   Button,
@@ -7,9 +7,9 @@ import {
   CardActions,
   CardContent,
 } from '@material-ui/core';
-import { useStyles } from './EditFormUi';
+import { useStyles } from './AddFormUi';
 
-export function EditForm(props) {
+export function AddForm(props) {
   const {
     inputName,
     inputPrice,
@@ -17,7 +17,7 @@ export function EditForm(props) {
     inputText,
     inputSize,
     handleInputChange,
-    handleUpdateProduct,
+    handleSubmit,
   } = props;
 
   const classes = useStyles();
@@ -75,23 +75,13 @@ export function EditForm(props) {
           <Button
             type="submit"
             variant="contained"
-            onClick={handleUpdateProduct}
+            onClick={handleSubmit}
             className={classes.button}
           >
-            Change product
+            Add product
           </Button>
         </CardActions>
       </Card>
     </form>
   );
 }
-
-EditForm.propTypes = {
-  inputName: PropTypes.string.isRequired,
-  inputPrice: PropTypes.string.isRequired,
-  inputCreate: PropTypes.string.isRequired,
-  inputText: PropTypes.string.isRequired,
-  inputSize: PropTypes.string.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  handleUpdateProduct: PropTypes.func.isRequired,
-};

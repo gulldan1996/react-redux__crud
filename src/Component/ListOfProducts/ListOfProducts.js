@@ -1,32 +1,18 @@
+/* eslint-disable no-shadow */
+/* eslint-disable prefer-const */
+/* eslint-disable react/prop-types */
 import React from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { deleteProduct, selectLink } from '../../redux/actions';
+import { getProduct } from '../../redux/selectors';
+import { useStyles } from './ListOfProductsUi';
 
-const useStyles = makeStyles({
-  container: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  card: {
-    minWidth: 275,
-    maxWidth: 300,
-    marginBottom: 15,
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
-
-export default function ListOfProducts(props) {
+const ListOfProducts = (props) => {
   const classes = useStyles();
   const {
     product,
@@ -35,22 +21,26 @@ export default function ListOfProducts(props) {
   } = props;
 
   return (
-    <>
-      {product.map((item, i) => {
+    <div className={classes.container}>
+      {product.length !== 0 ? product.map((item) => {
         const {
           name,
           id,
         } = item;
 
         return (
-          <div className={classes.container} key={id}>
+          <div key={id}>
             <Card className={classes.card}>
               <CardContent className={classes.title}>
                 <Typography>
                   {name}
                 </Typography>
               </CardContent>
-              <Button onClick={() => deleteProduct(id)}>Delete</Button>
+              <Button
+                onClick={() => deleteProduct(id)}
+              >
+                Delete
+              </Button>
               <Button
                 component={Link}
                 to={`EditProduct/${id}`}
@@ -68,17 +58,27 @@ export default function ListOfProducts(props) {
             </Card>
           </div>
         );
-      })}
-    </>
+      }) : (
+        <Card>
+          <CardContent className={classes.title}>
+            <Typography>
+              You have not product
+            </Typography>
+          </CardContent>
+        </Card>
+      )
+      }
+    </div>
   );
-}
-
-ListOfProducts.propTypes = {
-  product: PropTypes.string,
-  deleteProduct: PropTypes.func.isRequired,
-  selectLink: PropTypes.func.isRequired,
 };
 
-ListOfProducts.defaultProps = {
-  product: {},
-};
+let mapStateToProps = state => ({
+  product: getProduct(state),
+});
+
+let mapDispatchToProps = dispatch => ({
+  deleteProduct: id => dispatch(deleteProduct(id)),
+  selectLink: id => dispatch(selectLink(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListOfProducts);

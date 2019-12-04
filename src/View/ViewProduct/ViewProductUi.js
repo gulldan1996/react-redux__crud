@@ -4,6 +4,8 @@ export const useStyles = makeStyles({
   card: {
     minWidth: 275,
     maxWidth: 400,
+    margin: '0 auto',
+    marginTop: 50,
   },
   content: {
     width: '100%',

@@ -1,15 +1,20 @@
+/* eslint-disable no-shadow */
+/* eslint-disable prefer-const */
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { AddForm } from './AddForm/AddForm';
+import { addNewProduct } from '../../redux/actions';
+import { AddForm } from '../../View/AddForm';
+import { getAboutProduct, getIdProduct } from '../../redux/selectors';
 
-export default class AddNewProduct extends Component {
+class AddNewProduct extends Component {
   state = {
     inputName: '',
     inputPrice: '',
     createData: '',
-    text: '',
-    size: '',
+    inputText: '',
+    inputSize: '',
     redirect: false,
   };
 
@@ -25,23 +30,23 @@ export default class AddNewProduct extends Component {
       inputName,
       inputPrice,
       createData,
-      text,
-      size,
+      inputText,
+      inputSize,
     } = this.state;
     const {
+      idProduct,
       addNewProduct,
-      lengthProduct,
     } = this.props;
 
     addNewProduct({
-      id: lengthProduct.length + 1,
+      id: Math.max(...idProduct) + 1,
       name: inputName,
       price: inputPrice,
       createData,
       description:
         {
-          text,
-          size,
+          text: inputText,
+          size: inputSize,
         },
     });
 
@@ -49,8 +54,8 @@ export default class AddNewProduct extends Component {
       inputName: '',
       inputPrice: '',
       createData: '',
-      text: '',
-      size: '',
+      inputText: '',
+      inputSize: '',
       redirect: true,
     });
   };
@@ -63,6 +68,7 @@ export default class AddNewProduct extends Component {
       text,
       size,
     } = this.state;
+
     const {
       handleSubmit,
       handleInputChange,
@@ -86,11 +92,13 @@ export default class AddNewProduct extends Component {
   }
 }
 
-AddNewProduct.propTypes = {
-  lengthProduct: PropTypes.string,
-  addNewProduct: PropTypes.func.isRequired,
-};
+let mapStateToProps = state => ({
+  aboutProduct: getAboutProduct(state),
+  idProduct: getIdProduct(state),
+});
 
-AddNewProduct.defaultProps = {
-  lengthProduct: {},
-};
+let mapDispatchToProps = dispatch => ({
+  addNewProduct: item => dispatch(addNewProduct(item)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddNewProduct);
